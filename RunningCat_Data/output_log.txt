@@ -1,0 +1,81 @@
+Initialize engine version: 5.3.2f1 (e87ab445ead0)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [igdumdim32.dll 10.18.14.4264]
+    Renderer: Intel(R) HD Graphics Family
+    Vendor:   Intel
+    VRAM:     1024 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 NULL=1 RESZ=1 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.046 seconds
+Platform assembly: C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Yelin\Desktop\RunningCat\RunningCat_Data\Managed\System.dll (this message is harmless)
+desktop: 1600x900 50Hz; virtual: 1600x900 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.746486 ms
+The referenced script on this Behaviour (Game Object 'Game Root') is missing!
+ 
+(Filename:  Line: 1655)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.381730 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 383.
+Total: 0.263303 ms (FindLiveObjects: 0.036317 ms CreateObjectMapping: 0.026053 ms MarkObjects: 0.187509 ms  DeleteObjects: 0.012237 ms)
+
+#				FLOOR		HOLE		HEIGHT		INTERVAL
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+#TIME	SPEED	MIN	MAX		MIN	MAX		MIN	MAX		MIN	MAX
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+8.0		6.0		10	10		4	5		-2	5		10	20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+16.0	6.5		8	9		6	8		-3	5		10	20	
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+24.0	7.0		6	7		4	5		-4	4		10	20	
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+32.0	8.0		6	8		4	7		-1	1		10	20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+40.0	7.5		4	5		8	9		-2	2		10	20	
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+48.0	8.5		4	4		10	12		-4	4		10	20
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.058739 ms
+
+Unloading 114 unused Assets to reduce memory usage. Loaded Objects now: 226.
+Total: 0.396336 ms (FindLiveObjects: 0.036712 ms CreateObjectMapping: 0.037501 ms MarkObjects: 0.151981 ms  DeleteObjects: 0.168561 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.857018 ms
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 213.
+Total: 0.544765 ms (FindLiveObjects: 0.068687 ms CreateObjectMapping: 0.053687 ms MarkObjects: 0.376993 ms  DeleteObjects: 0.042633 ms)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: e40 -> priority: 1 
