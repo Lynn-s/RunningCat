@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ResultRoot : MonoBehaviour {
 
-    //위치 설정
+    	//위치 설정
 	private static float RESULT_SCORE_POS_X = 640.0f/2.0f -64.0f;	
 	private static float RESULT_SCORE_POS_Y = 120.0f;
 	private static float RESULT_HIGH_SCORE_POS_X = 640.0f/2.0f -64.0f;	
@@ -16,10 +16,10 @@ public class ResultRoot : MonoBehaviour {
 
 	private ScoreDisp score_disp = null;
 
-	private ScoreControl.Score high_score;//최고 기록
-	private ScoreControl.Score cur_score;//현재 기록
+	private ScoreControl.Score high_score; //최고 기록
+	private ScoreControl.Score cur_score; //현재 기록
 
-	private int disp_last_score = 0;//표시 점수    
+	private int disp_last_score = 0; //표시 점수    
 
 	private SoundControl sound_control = null;
 
@@ -28,7 +28,7 @@ public class ResultRoot : MonoBehaviour {
 		NONE = -1,
 		RESULT = 0, //결과
 		RESULT_ACTION, //결과화면 클릭
-		TITLE, //타이틀 화면
+		TITLE //타이틀 화면
 	};
 
 	public STEP step = STEP.NONE;
@@ -122,7 +122,7 @@ public class ResultRoot : MonoBehaviour {
 			break;
 		}
 
-        //위치 설정
+        	//위치 설정
 		rect.x = 0.0f;
 		rect.y = 0.0f;
 		rect.width  = back_texture.width;
@@ -134,8 +134,7 @@ public class ResultRoot : MonoBehaviour {
 		float scale = 1.0f;
 
 		if(this.step == STEP.RESULT_ACTION) { //클릭 시 버튼 효과
-
-            scale = 1.2f;
+            		scale = 1.2f;
 		}
 
 		rect.width  = this.next_texture.width*scale;
@@ -151,7 +150,7 @@ public class ResultRoot : MonoBehaviour {
 			case STEP.RESULT_ACTION:
 			case STEP.TITLE:
 			{
-			this.score_disp.dispNumber(new Vector2(RESULT_SCORE_POS_X, RESULT_SCORE_POS_Y), this.disp_last_score);// this.cur_score.score);
+				this.score_disp.dispNumber(new Vector2(RESULT_SCORE_POS_X, RESULT_SCORE_POS_Y), this.disp_last_score);// this.cur_score.score);
 				this.score_disp.dispNumber(new Vector2(RESULT_HIGH_SCORE_POS_X, RESULT_HIGH_SCORE_POS_Y), this.high_score.score);
 				this.score_disp.dispNumber(new Vector2(RESULT_HIGH_COIN_POS_X, RESULT_HIGH_COIN_POS_Y), this.high_score.coins);
 			}
