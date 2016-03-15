@@ -25,8 +25,7 @@ public class PlayerControl : MonoBehaviour {
         NONE = -1,
         RUN = 0,
         JUMP,
-        MISS,
-        NUM,
+        MISS
     };
 
     public STEP step = STEP.NONE;
@@ -52,65 +51,48 @@ public class PlayerControl : MonoBehaviour {
         Vector3 velocity = this.GetComponent<Rigidbody>().velocity;//속도 설정
         this.current_speed = this.level_control.getPlayerSpeed();
         this.check_landed();//착지 여부 체크
-
-        switch (this.step) {
-
-            case STEP.RUN:
-            case STEP.JUMP:
-                //플레이어가 떨어졌을 시
-                if (this.transform.position.y < FALLEN_HEIGHT) {
-                    this.next_step = STEP.MISS;//실패
-                }
-                break;
-
+        
+        if (this.transform.position.y < FALLEN_HEIGHT) {//플레이어가 떨어졌을 시
+            this.next_step = STEP.MISS;//실패
         }
+        
         this.step_timer += Time.deltaTime;//경과 시간
 
         if (Input.GetMouseButtonDown(0)) {//버튼이 눌릴 경우
             this.click_timer = 0.0f;    //타이머 리셋
         }
-        else {
-            if (this.click_timer >= 0.0f) {//아닌 경우
-                this.click_timer += Time.deltaTime; //경과 시간 더함
-            }
+        else if(this.click_timer >= 0.0f){//아닌 경우
+            this.click_timer += Time.deltaTime; //경과 시간 더함
         }
 
         if (this.next_step == STEP.NONE) {
 
-            switch (this.step) {
-
-                case STEP.RUN:
-                    //타이머가 0 이상 수용 시간 이하일 때
-                    if (0.0f <= this.click_timer && this.click_timer <= CLICK_GRACE_TIME) {
-                        if (this.is_landed) {   //착지 시
-                            this.click_timer = -1.0f;   //버튼이 눌리지 않은 상태를 나타냄
-                            this.next_step = STEP.JUMP;
-                        }
+            if(this.step==STEP.RUN){
+                //착지할 때, 타이머가 0 이상 수용 시간 이하일 때
+                if (this.is_landed && 0.0f <= this.click_timer && this.click_timer <= CLICK_GRACE_TIME) {
+                    this.click_timer = -1.0f;   //버튼이 눌리지 않은 상태를 나타냄
+                    this.next_step = STEP.JUMP;
+                }
+            }
+            else if(this.step==STEP.JUMP){
+                if (this.is_landed) {
+                    this.sound_control.playSound(Sound.SOUND.TDOWN);
+                    velocity.x = PlayerControl.SPEED_MIN;
+                    this.next_step = STEP.RUN;
+                    if (this.stepped_block != null) {
+                    this.stepped_block.onStepped();
                     }
-                    break;
-
-                case STEP.JUMP:
-                    if (this.is_landed) {
-                        this.sound_control.playSound(Sound.SOUND.TDOWN);
-                        velocity.x = PlayerControl.SPEED_MIN;
-                        this.next_step = STEP.RUN;
-                        if (this.stepped_block != null) {
-                            this.stepped_block.onStepped();
-                        }
-                    }
-                    break;
+                }
             }
         }
-        while (this.next_step != STEP.NONE) {//상태가 변할 때
-
+        
+        if(this.next_step != STEP.NONE){//상태가 변할 때
+        
             this.step = this.next_step;//현재 상태를 다음 상태로
             this.next_step = STEP.NONE;//다음 상태를 NONE으로
-
-            switch (this.step) {
-                case STEP.JUMP:
-                    velocity.y = Mathf.Sqrt(1.5f * 9.8f * PlayerControl.JUMP_HEIGHT_MAX);
-                    this.is_key_released = false;
-                    break;
+            if(this.step == STEP.JUMP){
+                velocity.y = Mathf.Sqrt(1.5f * 9.8f * PlayerControl.JUMP_HEIGHT_MAX);
+                this.is_key_released = false;
             }
             this.step_timer = 0.0f;
         }
@@ -123,29 +105,14 @@ public class PlayerControl : MonoBehaviour {
                 if (Mathf.Abs(velocity.x) > PlayerControl.SPEED_MAX) {//최고 속도 초과 시
                     velocity.x *= this.current_speed / Mathf.Abs(velocity.x);
                 }
-                if (Mathf.Abs(velocity.x) < PlayerControl.SPEED_MIN) {//속도 임시 제한
-                    velocity.x += PlayerControl.SPEED_MAX;
-                }
                 break;
 
             case STEP.JUMP://점프 시
-                do {
-                    if (!Input.GetMouseButtonUp(0)) {//버튼이 떨어지지 않았을 때
-                        break;
-                    }
-                    if (this.is_key_released) {//감속 시
-                        break;
-                    }
-                    if (velocity.y <= 0.0f) {//하강 시
-                        break;
-                    }
-
-                    //velocity.y *= JUMP_KEY_RELEASE_REDUCE;//상승 시 감속
-
-                    this.is_key_released = true;
-
-                } while (false);
-                break;
+                if (!Input.GetMouseButtonUp(0) || this.is_key_released || velocity.y <= 0.0f) {//버튼이 떨어지지 않았거나 감속 또는 하강
+                      this.is_key_released = true;
+                }
+                break;    
+                   
 
             case STEP.MISS: //플레이어의 속도를 줄인다
                 velocity.x -= PlayerControl.ACCELERATION * Time.deltaTime;
@@ -168,13 +135,11 @@ public class PlayerControl : MonoBehaviour {
                 break;
             }
 
-            if (this.step == STEP.JUMP)
+            if (this.step == STEP.JUMP && (this.step_timer < Time.deltaTime * 3.0f))
             {
-                if (this.step_timer < Time.deltaTime * 3.0f)
-                {
-                    break;
-                }
+                break;
             }
+            
             BlockControl block = hit.collider.GetComponent<BlockControl>();
 
             if (block != null) {
@@ -187,15 +152,8 @@ public class PlayerControl : MonoBehaviour {
 
     //게임이 끝났는지 판별
     public bool isPlayEnd() {
-
-        bool ret = false;
-
-        switch (this.step) {
-            case STEP.MISS:
-                ret = true;
-                break;
-        }
-        return (ret);
+        
+        return (this.step == STEP.MISS)?true:false;
     }
 
 
