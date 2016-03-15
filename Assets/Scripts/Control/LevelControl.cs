@@ -96,42 +96,36 @@ public class LevelControl
         int i;
         for (i = 0; i < this.level_datas.Count - 1; i++)
         {
-            if (local_time <= this.level_datas[i].end_time)
-            {
-                break;
-            }
+            if (local_time <= this.level_datas[i].end_time) break;//레벨 구하고 빠져나감
         }
-        this.current_level = i;
+        this.current_level = i;//레벨 대입
 
         current.block_type = Block.TYPE.FLOOR;
         current.max_count = 1;
-
+        
         if (this.block_count >= 10)
         {
             LevelData level_data;
             level_data = this.level_datas[this.current_level];
 
-            switch (previous.block_type)
-            {
-                case Block.TYPE.FLOOR://블록일 경우
+            if(previous.block_type == Block.TYPE.FLOOR) { //블록일 경우
                     current.block_type = Block.TYPE.HOLE;   //구멍 생성
                     current.max_count = Random.Range(level_data.hole_count.min, level_data.hole_count.max + 1);
                     current.height = previous.height;
-                    break;
-
-                case Block.TYPE.HOLE://구멍일 경우
-                    current.block_type = Block.TYPE.FLOOR;  //블록 생성
-                    current.max_count = Random.Range(level_data.floor_count.min, level_data.floor_count.max);
-
-                    int height_min = previous.height + level_data.height_diff.min;
-                    int height_max = previous.height + level_data.height_diff.max;
-
-                    height_min = Mathf.Clamp(height_min, HEIGHT_MIN, HEIGHT_MAX);
-                    height_max = Mathf.Clamp(height_max, HEIGHT_MIN, HEIGHT_MAX);
-
-                    current.height = Random.Range(height_min, height_max + 1);
-                    break;
             }
+            else { //구멍일 경우
+                current.block_type = Block.TYPE.FLOOR;  //블록 생성
+                current.max_count = Random.Range(level_data.floor_count.min, level_data.floor_count.max);
+
+                int height_min = previous.height + level_data.height_diff.min;
+                int height_max = previous.height + level_data.height_diff.max;
+
+                height_min = Mathf.Clamp(height_min, HEIGHT_MIN, HEIGHT_MAX);
+                height_max = Mathf.Clamp(height_max, HEIGHT_MIN, HEIGHT_MAX);
+
+                current.height = Random.Range(height_min, height_max + 1);;
+            }
+            
         }
 
     }
@@ -169,7 +163,6 @@ public class LevelControl
             {
                 continue;
             }
-            Debug.Log(line);
             string[] words = line.Split();
             int n = 0;
 
@@ -202,20 +195,14 @@ public class LevelControl
                 n++;
             }
 
-            if (n >= 10)
-            {//10항목 이상 제대로 처리 시
+            if (n >= 10) 
+            {   //10항목 이상 제대로 처리 시
                 this.level_datas.Add(level_data);
-            }
-            else {
-                if (n == 0) { }
-                else {
-                    Debug.LogError("LevelDate Out of parameter\n");
-                }
             }
         }
 
         if (this.level_datas.Count == 0)
-        {//level_datas에 데이터가 하나도 없을 시
+        {   //level_datas에 데이터가 하나도 없을 시
             Debug.LogError("LevelData Has No Data");
             this.level_datas.Add(new LevelData());//기본 LevelData 추가
         }
