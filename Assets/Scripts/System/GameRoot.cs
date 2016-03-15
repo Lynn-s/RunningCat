@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// 게임 진행 관리.
+// 게임 진행 관리
 public class GameRoot : MonoBehaviour {
 	private PlayerControl player = null;
 	private ScoreControl score_control = null;
