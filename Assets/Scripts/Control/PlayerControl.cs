@@ -69,7 +69,7 @@ public class PlayerControl : MonoBehaviour {
 
             if(this.step==STEP.RUN){
                 //착지할 때, 타이머가 0 이상 수용 시간 이하일 때
-                if (this.is_landed && 0.0f <= this.click_timer && this.click_timer <= CLICK_GRACE_TIME) {
+                if (this.is_landed && this.click_timer >= 0.0f && this.click_timer <= CLICK_GRACE_TIME) {
                     this.click_timer = -1.0f;   //버튼이 눌리지 않은 상태를 나타냄
                     this.next_step = STEP.JUMP;
                 }
