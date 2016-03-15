@@ -9,7 +9,7 @@ public class Block {
         NONE = -1,
         FLOOR = 0,      //바닥
         HOLE,           //구멍
-        NUM,            //블록 종류 수
+        NUM            //블록 종류 수
     };
 }
 
@@ -145,16 +145,13 @@ public class MapCreator : MonoBehaviour {
 
     public bool isDelete(GameObject block_object) {
 
-        bool ret = false;
-
         float left_limit = this.player.transform.position.x - BLOCK_WIDTH * ((float)BLOCK_NUM_IN_SCREEN / 2.0f);
 
         if (block_object.transform.position.x < left_limit) {
-
-            ret = true;
+            return true;
         }
-
-        return (ret);
+        else return false;
+        
     }
 
 }
