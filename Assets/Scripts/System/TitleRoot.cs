@@ -12,9 +12,9 @@ public class TitleRoot : MonoBehaviour {
 
 		NONE = -1,
 		LOAD_SAVE_DATA = 0,	//데이터 로드
-		WAIT_CLICK,			//클릭 대기
+		WAIT_CLICK,		//클릭 대기
 		START_ACTION,		//시작 액션
-		GAME_START,			//게임 시작
+		GAME_START		//게임 시작
 	};
 
 	public STEP step = STEP.NONE;
@@ -26,7 +26,7 @@ public class TitleRoot : MonoBehaviour {
 
 		this.next_step = STEP.LOAD_SAVE_DATA;
 		this.sound_control = GameObject.Find("SoundRoot").GetComponent<SoundControl>();
-    }
+    	}
 
 	void Update() { 
 
@@ -52,23 +52,13 @@ public class TitleRoot : MonoBehaviour {
 			}
 		}
 
-        //상태 전환 시
-		while(this.next_step != STEP.NONE) {
-
+        	//상태 전환 시
+		if(this.next_step != STEP.NONE){
 			this.step      = this.next_step;
 			this.next_step = STEP.NONE;
-
-			switch(this.step) {
-	
-				case STEP.LOAD_SAVE_DATA:
-					GlobalParam.getInstance().loadSaveData();				
-				    break;
-
-				case STEP.GAME_START:
-					Application.LoadLevel("GameScene");				
-				    break;
-			}
-            
+			
+			if(this.step == STEP.LOAD_SAVE_DATA)	GlobalParam.getInstance().loadSaveData();
+			else if(this.step == STEP.GAME_START)	Application.LoadLevel("GameScene");
 		}
         
 	}
@@ -91,7 +81,7 @@ public class TitleRoot : MonoBehaviour {
 
             scale = 1.2f;
         }
-        rect.width  = this.start_texture.width*scale;
+        	rect.width  = this.start_texture.width*scale;
 		rect.height = this.start_texture.height*scale;
 		rect.x = Screen.width*0.8f  - rect.width/2.0f;
 		rect.y = Screen.height*0.9f - rect.height/2.0f;
