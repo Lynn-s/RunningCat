@@ -4,16 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-// 플레이어 데이터 세이브/로드
-//
-// UnityEditor에서 실행했을 때　…　FileStream
-// WebPlayer  에서 실행했을 때　…　PlayerPrefs
-//
-// 를 사용한다.
-//
-// PlayerPrefs는 UnityEditor에서 실행했을 때 레지스트리(!)에
-// 저장해버리므로.
-//
+// 플레이어 데이터 세이브 및 로드
 public class SaveData {
     
 	public enum TYPE {
@@ -21,18 +12,17 @@ public class SaveData {
 		NONE = -1,
 		STRING = 0,
 		INT,
-		FLOAT,
-		NUM,
+		FLOAT
 	};
 
-	// 아이템.
+	//아이템
 	public class Item {
 
 		public	string	name  = "";
 		public	TYPE	type  = TYPE.NONE;
 		public	string	value = "";
 
-		// 문자열로 변환한다.
+		//문자열로 변환
 		public	string	toString()
 		{
 			string str = "";
@@ -46,10 +36,9 @@ public class SaveData {
 			return(str);
 		}
 
-		// 문자열로부터 만든다.
-		public static Item		fromString(string str)
+		public static Item	fromString(string str)
 		{
-			Item		item = new Item();
+			Item	item = new Item();
 
 			do {
 
@@ -57,7 +46,6 @@ public class SaveData {
 				string[]	words = str.Split(separators);
 	
 				if(words.Length < 3) {
-	
 					break;
 				}
 	
@@ -81,17 +69,14 @@ public class SaveData {
 
 	public SaveData() {}
 
-	// ================================================================ //
-
-	public bool		isHasItem(string name)
+	public bool	isHasItem(string name)
 	{
-		bool	ret = (this.items.Find(x => x.name == name) != null);
-
-		return(ret);
+		if(this.items.Find(x => x.name == name) != null) return true;
+		else return false;
 	}
 
-	// 문자 아이템을 추가한다.
-	public void		addString(string name, string value)
+	//문자 아이템 추가
+	public void	addString(string name, string value)
 	{
 		if(!this.isHasItem(name)) {
 
@@ -105,8 +90,8 @@ public class SaveData {
 		}
 	}
 
-	// int 아이템을 추가한다.
-	public void		addInt(string name, int value)
+	//int 아이템 추가
+	public void	addInt(string name, int value)
 	{
 		if(!this.isHasItem(name)) {
 
@@ -120,119 +105,74 @@ public class SaveData {
 		}
 	}
 
-	// 문자열 아이템에 값을 설정한다.
-	public bool		setString(string name, string value)
+	// 아이템 값 설정
+	public bool	setString(string name, string value)
 	{
-		bool	ret = false;
+		bool ret = false;
 
-		do {
+		Item item = this.items.Find(x => x.name == name);
 
-			Item		item = this.items.Find(x => x.name == name);
-
-			if(item == null) {
-
-				break;
-			}
-			if(item.type != TYPE.STRING) {
-
-				break;
-			}
-
+		if(item != null || item.type == TYPE.STRING) {
 			item.value = value;
-
-			ret = true;
-
-		} while(false);
-
-		return(ret);
+			retuen true;
+		}
+		return false;
 	}
 
-	// int 아이템에 값을 설정한다.
-	public bool		setInt(string name, int value)
+	// 아이템 값 설정
+	public bool	setInt(string name, int value)
 	{
-		bool	ret = false;
+		bool ret = false;
 
-		do {
+		Item item = this.items.Find(x => x.name == name);
 
-			Item		item = this.items.Find(x => x.name == name);
-
-			if(item == null) {
-
-				break;
-			}
-			if(item.type != TYPE.INT) {
-
-				break;
-			}
+		if(item != null || item.type == TYPE.INT) {
 
 			item.value = value.ToString();
+			return true;
+		}
+		return false;
+	}
+	
+	// int 아이템에서 값을 얻는다.
+	public int	getInt(string name, int default_value = -1)
+	{
+		int ret = -1;
 
-			ret = true;
+		Item item = this.items.Find(x => x.name == name);
 
-		} while(false);
+		if((item != null || item.type == TYPE.INT) && !int.TryParse(item.value, out ret) {
+
+			ret = default_value;
+		}
 
 		return(ret);
 	}
 	
-	// int 아이템에서 값을 얻는다.
-	public int		getInt(string name, int default_value = -1)
+	//로드
+	public void	load()
 	{
-		int		ret = default_value;
-
-		do {
-
-			Item		item = this.items.Find(x => x.name == name);
-
-			if(item == null) {
-
-				break;
-			}
-			if(item.type != TYPE.INT) {
-
-				break;
-			}
-
-			if(!int.TryParse(item.value, out ret)) {
-
-				ret = default_value;
-			}
-
-		} while(false);
-
-		return(ret);
-	}
-
-	// ================================================================ //
-
-	// 로드.
-	public void		load()
-	{
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		this.load_from_stream();
-#else
+		#else
 		this.load_from_prefs();
-#endif
+		#endif
 	}
 
-	// 세이브.
-	public void		save()
+	// 세이브
+	public void	save()
 	{
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		this.save_to_stream();
-#else
+		#else
 		this.save_to_prefs();
-#endif
+		#endif
 	}
 
-	// ================================================================ //
-	// FileStream을 사용한다(UnityEditor에서 사용한다).
-
-	// 세이브.
-	public void		save_to_stream()
+	//세이브
+	public void	save_to_stream()
 	{
-		DebugWindow.get().add_text("[SaveData.save] unity editor");
-
-		FileStream		stream = new FileStream("save_data.dat", FileMode.Create, FileAccess.Write);
+		FileStream	stream = new FileStream("save_data.dat", FileMode.Create, FileAccess.Write);
 		StreamWriter	writer = new StreamWriter(stream);
 
 		foreach(var item in this.items) {
@@ -243,12 +183,10 @@ public class SaveData {
 		writer.Close();
 	}
 
-	// 로드.
-	public void		load_from_stream()
+	//로드
+	public void	load_from_stream()
 	{
-		DebugWindow.get().add_text("[SaveData.load] unity editor");
-
-		FileStream		stream = new FileStream("save_data.dat", FileMode.Open, FileAccess.Read);
+		FileStream	stream = new FileStream("save_data.dat", FileMode.Open, FileAccess.Read);
 		StreamReader	reader = new StreamReader(stream);
 
 		string	line_text;
@@ -257,7 +195,6 @@ public class SaveData {
 
 			Item	item = Item.fromString(line_text);
 
-			// 같은 이름이 있으면 삭제해 둔다.
 			this.items.RemoveAll(x => x.name == item.name);
 
 			this.items.Add(item);
@@ -265,15 +202,10 @@ public class SaveData {
 
 		reader.Close();
 	}
-
-	// ================================================================ //
-	// PlayerPrefs를 사용한다(WebPlayer에서 사용한다).
-
-	// 저장.
-	public void		save_to_prefs()
+	
+	//저장
+	public void	save_to_prefs()
 	{
-		DebugWindow.get().add_text("[SaveData.save] web player");
-
 		foreach(var item in this.items) {
 
 			switch(item.type) {
@@ -311,11 +243,9 @@ public class SaveData {
 		PlayerPrefs.Save();
 	}
 
-	// 로드.
-	public void		load_from_prefs()
+	//로드
+	public void	load_from_prefs()
 	{
-		DebugWindow.get().add_text("[SaveData.load] web player");
-
 		foreach(var item in this.items) {
 
 			switch(item.type) {
