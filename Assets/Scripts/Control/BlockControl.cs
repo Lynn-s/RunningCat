@@ -43,7 +43,7 @@ public class BlockControl : MonoBehaviour {
 			this.spring.velocity = 0.0f;
 		}
         
-        //화면에서 벗어날 시 삭제
+        	//화면에서 벗어날 시 삭제
 		if(this.map_creator.isDelete(this.gameObject)) {
 
 			GameObject.Destroy(this.gameObject);
