@@ -5,7 +5,7 @@ public class ScoreControl : MonoBehaviour {
 
 	public struct Score {
 
-        public int score; //점수
+        	public int score; //점수
 		public int coins; //코인 수
 	};
 
@@ -61,7 +61,7 @@ public class ScoreControl : MonoBehaviour {
 		GUI.DrawTexture(new Rect(POS_HIGHSCORE_X -32, POS_Y, this.icon_top.width, this.icon_top.height), this.icon_top);
 	}
 
-    //코인 획득 시 점수 증가
+    	//코인 획득 시 점수 증가
 	public void	addCoinScore() {
 
 		this.score.score += 10;
