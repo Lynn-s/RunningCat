@@ -159,10 +159,8 @@ public class LevelControl
 
         foreach (var line in lines)
         {
-            if (line == "")
-            {
-                continue;
-            }
+            if (line == "") continue;
+            
             string[] words = line.Split();
             int n = 0;
 
@@ -170,14 +168,8 @@ public class LevelControl
 
             foreach (var word in words)
             {
-                if (word.StartsWith("#"))
-                {
-                    break;
-                }
-                if (word == "")
-                {
-                    continue;
-                }
+                if (word == "") continue;
+                else if(word.StartsWith("#"))   break;
 
                 switch (n)
                 {
