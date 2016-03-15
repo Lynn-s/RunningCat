@@ -11,7 +11,7 @@ public class GameRoot : MonoBehaviour {
 		NONE = -1,
 		PLAY = 0,		//게임 진행
 		WAIT_CLICK,		//게임 끝난 후 클릭 대기
-		RESULT,			//결과
+		RESULT			//결과
 	};
 
 	public STEP	step      = STEP.NONE;
@@ -52,8 +52,8 @@ public class GameRoot : MonoBehaviour {
 			}
 		}        
 
-        //상태 전환 시 초기화
-		while(this.next_step != STEP.NONE) {
+        	//상태 전환 시 초기화
+		if(this.next_step != STEP.NONE){
 
 			this.step      = this.next_step;
 			this.next_step = STEP.NONE;
